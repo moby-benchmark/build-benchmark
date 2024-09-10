@@ -41,6 +41,8 @@ jobs:
       - uses: namespacelabs/nscloud-setup@v0
 
       - uses: namespacelabs/nscloud-setup-buildx-action@v0
+        with:
+          load-to-docker: false
 
       - name: Avoid Dockerhub pull limits
         run: |
@@ -49,7 +51,7 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: ./moby
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
 
   notify-failures:
     name: Notify on build failures
