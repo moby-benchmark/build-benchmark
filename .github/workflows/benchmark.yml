@@ -46,7 +46,7 @@ jobs:
         run: |
           sed -i 's=https://registry-1.docker.io=169.254.169.43:6001=g' ./moby/contrib/download-frozen-image-v2.sh
 
-      - uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v6
         with:
           context: ./moby
           platforms: linux/amd64,linux/arm64
