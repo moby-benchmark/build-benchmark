@@ -53,6 +53,24 @@ jobs:
           context: ./moby
           platforms: linux/amd64,linux/arm64
 
+  nsc-build-namespace-runners:
+    name: Build with Namespace - on Namespace runners
+    runs-on: nscloud-ubuntu-22.04-amd64-2x8
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: git submodule update --init moby
+
+      - name: Avoid Dockerhub pull limits
+        run: |
+          sed -i 's=https://registry-1.docker.io=169.254.169.43:6001=g' ./moby/contrib/download-frozen-image-v2.sh
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./moby
+          platforms: linux/amd64,linux/arm64
+
   notify-failures:
     name: Notify on build failures
     needs:
